@@ -9,11 +9,11 @@ void setup()
 	lcd.begin();
 	lcd.backlight();
   lcd.clear();
-	lcd.print("CO2:");
+	lcd.print("Hello, World");
 }
 
 void loop()
 {
 	lcd.setCursor(5,1);
-  lcd.print("results");
+  lcd.print("LCD");
 }
