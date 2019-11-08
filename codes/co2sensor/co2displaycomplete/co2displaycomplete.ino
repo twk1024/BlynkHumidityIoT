@@ -1,8 +1,16 @@
+#define BLYNK_PRINT Serial
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <SoftwareSerial.h>
 #include <MHZ19.h>
 #include <dht11.h>         
+
+char auth[] = "yVlpBz0CF7FF-NGoexfkT5mHoGwHtXGI";
+char ssid[] = "kimtaewon";
+char pass[] = "12345678";
+
 
 SoftwareSerial ss(D7,D8);
 MHZ19 mhz(&ss);
@@ -26,6 +34,7 @@ dht11 DHT11;
 void setup()
 {
   Serial.begin(115200);
+  Blynk.begin(auth, ssid, pass);
   Serial.println(F("Starting..."));
   ss.begin(9600);
     
@@ -92,15 +101,18 @@ void loop()
   lcd.setCursor(0,1);
   lcd.print("Temp:");
   lcd.setCursor(6,1);
-  lcd.print(mhz.getTemperature());
+  lcd.print((float)DHT11.temperature, 0);
   lcd.setCursor(9,1);
   lcd.print("C");
 
   lcd.setCursor(13,0);
   lcd.print("Humi:");
   lcd.setCursor(13,1);
-  lcd.print((float)DHT11.humidity, 2);
+  lcd.print((float)DHT11.humidity, 0);
 
+  Blynk.virtualWrite(V0, mhz.getCO2());
+  Blynk.virtualWrite(V1, DHT11.humidity);
+  Blynk.virtualWrite(V2, DHT11.temperature);
 
   if (mhz.getCO2() > 800)
   {
