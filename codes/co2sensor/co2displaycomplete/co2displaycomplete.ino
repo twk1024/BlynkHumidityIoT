@@ -31,6 +31,8 @@ dht11 DHT11;
 //buzzer
 //int buzzer = D3;        
 
+ 
+
 void setup()
 {
   Serial.begin(115200);
@@ -90,6 +92,25 @@ void loop()
   Serial.println(Fahrenheit(DHT11.temperature), 2); // DHT11.temperature 값을 소수점 2자리수까지 출력하고 줄을 바꿉니다.
   delay(2000);                                       // 2초동안 지연시킵니다.
 
+
+  //notify
+   if (mhz.getCO2() > 800)
+  {
+    Blynk.notify("CO2 - 800ppm 초과");
+    //Blynk.email("twk1024@gmail.com", "CO2 측정 알림", "주의 - 센서의 CO2 측정값이 800ppm을 초과하였습니다!");
+    }
+
+    if (DHT11.humidity > 80)
+  {
+    Blynk.notify("습도 - 80% 초과");
+    //Blynk.email("twk1024@gmail.com", "습도 측정 알림", "주의 - 센서의 습도(%) 측정값이 80%를 초과하였습니다!");
+    }
+
+     if (DHT11.temperature > 28)
+  {
+    Blynk.notify("온도 - 30C 초과");
+    //Blynk.email("twk1024@gmail.com", "온도 측정 알림", "주의 - 센서의 온도(C) 측정값이 30C를 초과하였습니다!");
+    }
   
   lcd.clear();
   lcd.print("CO2:");
@@ -114,6 +135,8 @@ void loop()
   Blynk.virtualWrite(V1, DHT11.humidity);
   Blynk.virtualWrite(V2, DHT11.temperature);
 
+
+
   if (mhz.getCO2() > 800)
   {
     digitalWrite(D0, LOW);
@@ -131,6 +154,6 @@ void loop()
    
   }
   
-  delay(15000);
+  delay(13000);
 	
 }
