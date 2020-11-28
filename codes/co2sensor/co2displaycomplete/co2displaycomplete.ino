@@ -7,9 +7,9 @@
 #include <MHZ19.h>
 #include <dht11.h>         
 
-char auth[] = "yVlpBz0CF7FF-NGoexfkT5mHoGwHtXGI";
-char ssid[] = "kimtaewon";
-char pass[] = "12345678";
+char auth[] = "Your Auth Token";
+char ssid[] = "Your Wifi SSID(name)";
+char pass[] = "Your Wifi Password";
 
 
 SoftwareSerial ss(D7,D8);
